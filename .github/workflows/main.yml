@@ -27,7 +27,7 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Filter *.cpp | ForEach-Object {
-            $exeName = "build\" + $_.BaseName + ".exe"
+            $exeName = "build-windows\" + $_.BaseName + ".exe"
             cl /EHsc /Fe:$exeName $_.FullName
           }
 
@@ -52,7 +52,7 @@ jobs:
       - name: Compile C++ files (macOS) with Clang
         run: |
           for file in *.cpp; do
-            clang++ -std=c++17 -o build/"${file%.cpp}" "$file"
+            clang++ -std=c++17 -o build-mac/"${file%.cpp}" "$file"
           done
 
       - name: Commit and push build results
