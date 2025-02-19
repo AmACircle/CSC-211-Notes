@@ -1,4 +1,5 @@
 #include <iostream>
+#inclue <algorithm>
 using namespace std;
 
 template <typename T>
