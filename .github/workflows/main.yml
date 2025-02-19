@@ -36,7 +36,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add build-windows
-          git commit -m "Add Windows build artifacts [CI]"
+          git commit -m "[CI] Added Windows builds."
           git push --force
         continue-on-error: true 
         
@@ -60,6 +60,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add build-mac
-          git commit -m "Add macOS build artifacts [CI]"
+          git commit -m "[CI] Added Mac builds."
           git push
         continue-on-error: true 
