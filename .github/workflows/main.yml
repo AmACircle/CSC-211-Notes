@@ -1,0 +1,41 @@
+name: Build C++ Executables
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Compile C++ program (Windows)
+        run: cl /EHsc /Fe:program.exe *.cpp
+
+      - name: Upload Windows executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-executable
+          path: program.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile C++ program (macOS) with Clang
+        run: clang++ -std=c++17 -o program *.cpp
+
+      - name: Upload macOS executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-executable
+          path: program
