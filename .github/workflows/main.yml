@@ -16,14 +16,18 @@ jobs:
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Compile C++ program (Windows)
-        run: cl /EHsc /Fe:program.exe *.cpp
+      - name: Create build directory
+        run: mkdir build
 
-      - name: Upload Windows executable
+      - name: Compile C++ files (Windows)
+        run: |
+          for %f in (*.cpp) do cl /EHsc /Fe:build\%~nf.exe %f
+
+      - name: Upload Windows executables
         uses: actions/upload-artifact@v4
         with:
-          name: windows-executable
-          path: program.exe
+          name: windows-executables
+          path: build/
 
   build-macos:
     runs-on: macos-latest
@@ -31,11 +35,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Compile C++ program (macOS) with Clang
-        run: clang++ -std=c++17 -o program *.cpp
+      - name: Create build directory
+        run: mkdir build
 
-      - name: Upload macOS executable
+      - name: Compile C++ files (macOS) with Clang
+        run: |
+          for file in *.cpp; do
+            clang++ -std=c++17 -o build/"${file%.cpp}" "$file"
+          done
+
+      - name: Upload macOS executables
         uses: actions/upload-artifact@v4
         with:
-          name: macos-executable
-          path: program
+          name: macos-executables
+          path: build/
