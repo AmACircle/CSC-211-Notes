@@ -61,5 +61,5 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add build-mac
           git commit -m "[CI] Added Mac builds."
-          git push
+          git push --force
         continue-on-error: true 
