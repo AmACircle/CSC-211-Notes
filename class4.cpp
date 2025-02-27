@@ -41,15 +41,14 @@ void inputArr(int *arr, int n) {
 }
 
 int main() {
-	/*
 	const int SIZE = 10;
 	int array[SIZE] = { 1, -1, 19, -11, -2, 55, -12, 14, 100, 2 };
 
 	findLargest(array, SIZE);
 	firstLargest(array, SIZE);
-	*/
+	
 
-	/*
+	
 	const int SIZE = 8;
 	int numbers[SIZE] = { 5, 10, 15, 20, 25, 30, 35, 40 };
 	int* ptr = numbers;
@@ -69,22 +68,24 @@ int main() {
 		cout << *(ptr-1) << " "; //ptr was out the array bound
 		ptr--;
 	}
-	*/
+	
 
 	const int SIZE = 5;
 	int list[SIZE] = { 1, 2, 3, 4, 5 };
 
-	/*
+	
 	cout << list << endl;
 	// Array name holds the base address, a pointer type variable.
 	// The array name is NOT mutable.
 	cout << *list << endl; // References list[0]
 	cout << *(list + 1) << endl; // list[1]
 	cout << *(list + 2) << endl; // list[2]
-	*/
+	
 
 	inputArr(list, SIZE);
 	cout << &list[SIZE - 1];
+
+	cout << "L O L " << endl;
 
 	return 0;
 }
