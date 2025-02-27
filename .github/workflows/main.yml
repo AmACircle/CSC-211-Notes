@@ -10,6 +10,31 @@ permissions:
   contents: write
 
 jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create build directory
+        run: mkdir -p build-mac
+
+      - name: Compile C++ files (macOS) with Clang
+        run: |
+          for file in *.cpp; do
+            clang++ -std=c++17 -o build-mac/"${file%.cpp}" "$file"
+          done
+
+      - name: Commit and push build results
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull
+          git add build-mac
+          git commit -m "[CI] Added Mac builds."
+          git push
+        continue-on-error: true 
+        
   build-windows:
     runs-on: windows-latest
     steps:
@@ -35,31 +60,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull
           git add build-windows
           git commit -m "[CI] Added Windows builds."
-          git push --force
+          git push
         continue-on-error: true 
         
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Create build directory
-        run: mkdir -p build-mac
-
-      - name: Compile C++ files (macOS) with Clang
-        run: |
-          for file in *.cpp; do
-            clang++ -std=c++17 -o build-mac/"${file%.cpp}" "$file"
-          done
-
-      - name: Commit and push build results
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add build-mac
-          git commit -m "[CI] Added Mac builds."
-          git push --force
-        continue-on-error: true 
