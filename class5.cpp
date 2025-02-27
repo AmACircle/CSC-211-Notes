@@ -44,7 +44,7 @@ int main() {
 	displayLastTwo(array, size);
 	displayLastTwo(array2, size2);
 
-	// largestValue(array, size);
+	largestValue(array, size);
 
 	return 0;
 }
