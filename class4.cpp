@@ -48,7 +48,7 @@ int main() {
 	firstLargest(array, SIZE);
 	
 
-	
+	/**
 	const int SIZE = 8;
 	int numbers[SIZE] = { 5, 10, 15, 20, 25, 30, 35, 40 };
 	int* ptr = numbers;
@@ -68,6 +68,7 @@ int main() {
 		cout << *(ptr-1) << " "; //ptr was out the array bound
 		ptr--;
 	}
+	**/
 	
 
 	const int SIZE = 5;
