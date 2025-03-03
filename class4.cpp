@@ -41,6 +41,7 @@ void inputArr(int *arr, int n) {
 }
 
 int main() {
+	/**
 	const int SIZE = 10;
 	int array[SIZE] = { 1, -1, 19, -11, -2, 55, -12, 14, 100, 2 };
 
@@ -48,7 +49,6 @@ int main() {
 	firstLargest(array, SIZE);
 	
 
-	/**
 	const int SIZE = 8;
 	int numbers[SIZE] = { 5, 10, 15, 20, 25, 30, 35, 40 };
 	int* ptr = numbers;
@@ -85,8 +85,6 @@ int main() {
 
 	inputArr(list, SIZE);
 	cout << &list[SIZE - 1];
-
-	cout << "L O L " << endl;
-
+	
 	return 0;
 }
