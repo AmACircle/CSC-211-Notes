@@ -1,4 +1,4 @@
-#include "clockType.h"
+#include "clockTypeImp.cpp"
 #include "studentType.h"
 
 int main() {
@@ -21,7 +21,8 @@ int main() {
 
 	myClock.incrementHours();
 	myClock.getTime(hours, minutes, seconds);
-	cout << "myClock time: " << hours << ":" << minutes << ":" << seconds << endl;
+	cout << "myClock time: " << hours << " hours, " << minutes << " minutes, "
+		 << seconds << " seconds." << endl;
 
 	return 0;
 }
