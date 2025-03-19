@@ -21,8 +21,15 @@ jobs:
 
       - name: Compile C++ files (macOS) with Clang
         run: |
-          for file in *.cpp; do
-            clang++ -std=c++17 -o build-mac/"${file%.cpp}" "$file"
+          # Find all CPP files in the repository, including in subdirectories
+          find . -name "*.cpp" -type f | while read -r file; do
+            # Get the directory structure relative to the current directory
+            rel_dir=$(dirname "$file" | sed 's/^\.\///')
+            # Create the corresponding directory in build-mac if it doesn't exist
+            mkdir -p "build-mac/$rel_dir"
+            # Compile the file and place it in the correct subdirectory
+            echo "Compiling $file to build-mac/$rel_dir/$(basename "${file%.cpp}")"
+            clang++ -std=c++17 -o "build-mac/$rel_dir/$(basename "${file%.cpp}")" "$file"
           done
 
       - name: Commit and push build results
@@ -51,9 +58,22 @@ jobs:
       - name: Compile C++ files (Windows)
         shell: pwsh
         run: |
-          Get-ChildItem -Filter *.cpp | ForEach-Object {
-            $exeName = "build-windows\" + $_.BaseName + ".exe"
-            cl /EHsc /Fe:$exeName $_.FullName
+          # Find all CPP files recursively
+          Get-ChildItem -Path . -Filter *.cpp -Recurse | ForEach-Object {
+            # Get relative directory path
+            $relDir = $_.DirectoryName.Replace("$PWD\", "").Replace("$PWD/", "")
+            if ($relDir -eq $PWD) { $relDir = "" }
+            
+            # Create target directory
+            $targetDir = Join-Path "build-windows" $relDir
+            New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+            
+            # Set output executable path
+            $exeName = Join-Path $targetDir "$($_.BaseName).exe"
+            
+            # Compile
+            Write-Host "Compiling $($_.FullName) to $exeName"
+            cl /EHsc /Fe:"$exeName" $_.FullName
           }
 
       - name: Commit and push build results
@@ -64,5 +84,4 @@ jobs:
           git add build-windows
           git commit -m "[CI] Added Windows builds."
           git push
-        continue-on-error: true 
-        
+        continue-on-error: true
